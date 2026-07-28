@@ -1,0 +1,41 @@
+bash ~/jy_cog/system/scripts/start_nav.sh
+
+bash ~/jy_cog/system/scripts/kill_nav.sh
+bash /home/ysc/jy_cog/system/scripts/start_mapping.sh hkskp y outdoor true
+bash /home/ysc/jy_cog/system/scripts/construct_full_map.sh # 构建完整点云地图程序
+bash /home/ysc/jy_cog/system/scripts/construct_occ_map.sh # 构建栅格地图程序
+cd ~/jy_cog/system/scripts
+bash kill_mapping.sh
+cd ~/jy_cog/system/maps
+pcl_viewer jueying.pcd
+bash ~/jy_cog/system/scripts/start_rviz.sh
+
+bash /home/ysc/jy_cog/system/scripts/save_and_restart_occ_mapping.sh
+
+bash /home/ysc/jy_cog/system/scripts/set_floor_label.sh [楼层序号]
+
+bash /home/ysc/jy_cog/system/scripts/GUI_mapping.sh
+
+bash ~/jy_cog/rosbag_recorder/scripts/start_record.sh
+bash ~/jy_cog/rosbag_recorder/scripts/stop_record.sh
+
+cd ~/jy_cog/system/record/bags/mapping
+rosnode kill /livox_lidar_publisher2
+rosnode kill /yesense_imu_node
+rosbag play ~/jy_cog/system/record/bags/mapping/数据包
+bash ~/jy_cog/system/scripts/set_floor_label.sh
+
+
+cd ~/jy_cog/system #进入目录（可忽略）
+ln -s maps/文件夹名 map #文件夹名按实际情况替换，此命令作用为创建一个名为 map 的软链接，指向 maps 下
+的某一个文件夹
+
+#理工GNSS
+cd ~/jy_cog/gnss/
+source ~/jy_cog/gnss/gnss_driver_ws/devel/setup.bash
+roslaunch ublox_driver ublox_driver.launch
+sudo chmod 777 /dev/ttyACM1
+rostopic echo /ublox_driver/receiver_lla
+rosbag record -a --split --size=1024 -O all_topics
+
+
