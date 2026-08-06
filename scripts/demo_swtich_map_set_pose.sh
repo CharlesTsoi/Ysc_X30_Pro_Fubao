@@ -16,15 +16,15 @@ read -r choice
 case $choice in
     1)
         echo "🔄 正在切换到 **室内** 模式..."
-        MAP_DIR="$HOME/Desktop/indoor"
+        MAP_DIR="$HOME/Ysc_X30_Pro_Fubao/scripts"
         MAP_SCRIPT="$MAP_DIR/set_indoor_map.sh"
-        POSE_SCRIPT="$MAP_DIR/set_initial_2Dpose.sh"
+        POSE_SCRIPT="$MAP_DIR/set_initial_2Dpose_indoor.sh"
         ;;
     2)
         echo "🔄 正在切换到 **户外** 模式..."
-        MAP_DIR="$HOME/Desktop/ourdoor_demo"
-        MAP_SCRIPT="$MAP_DIR/set_ourdoor_map.sh"
-        POSE_SCRIPT="$MAP_DIR/set_initial_2Dpose.sh"
+        MAP_DIR="$HOME/Ysc_X30_Pro_Fubao/scripts"
+        MAP_SCRIPT="$MAP_DIR/set_outdoor_map.sh"
+        POSE_SCRIPT="$MAP_DIR/set_initial_2Dpose_outdoor.sh"
         ;;
     *)
         echo "❌ 无效输入！请只输入 1 或 2"
